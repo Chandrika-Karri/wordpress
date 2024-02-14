@@ -1,1 +1,51 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-deployment
+spec:
+  replicas: 2
+  selector:
+    matchlabels:
+      myapp: wordpress
+  template:
+    metadata:
+      labels:
+        myapp: wordpress
+    spec:
+      containers:
+        - name: wordpress
+          image: klchandrika/wordpress:latest
+          env:
+            - name: WORDPRESS_DB_HOST
+              value: mysql-service
+            - name: WORDPRESS_DB_USER
+              valueFrom:
+                secretkeyRef:
+                  name: mysql-secret
+                  key: mysql_user
+            - name: WORDPRESS_DB_PASSWORD
+              valueFrom:
+                secretkeyRef:
+                  name: mysql-secret
+                  key: mysql_user_password
+            - name: WORDPRESS_DB_NAME
+              valueFrom:
+                secretkeyRef:
+                  name: mysql-secret
+                  key: mysql_dbname
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  Selector: 
+    myapp: wordpress
+    
+                  
