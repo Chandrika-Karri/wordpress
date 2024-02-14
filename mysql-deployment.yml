@@ -20,22 +20,22 @@ spec:
               valueFrom:
                 secretkeyRef:
                   name: mysql-secret
-                  key: mysql_root_password
+                  key: DB_ROOT_PASSWORD
             - name: MYSQL_DATABASE
               valueFrom:
                 secretkeyRef:
                   name: mysql-secret
-                  key: mysql_dbname
+                  key: DB_NAME
             - name: MYSQL_USER
               valueFrom:
                 secretkeyRef:
                   name: mysql-secret
-                  key: mysql_user
+                  key: DB_USER
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretkeyRef:
                   name: mysql-secret
-                  key: mysql_user_password
+                  key: DB_PASSWORD
 ---
 apiVersion: v1
 kind: Service
