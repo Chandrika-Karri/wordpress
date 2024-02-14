@@ -1,1 +1,49 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 2
+  selector:
+    matchlabels:
+      myapp: mysqldb
+  template:
+    metadata:
+      labels:
+        myapp: mysqldb
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:latest
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretkeyRef:
+                  name: mysql-secret
+                  key: mysql_root_password
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretkeyRef:
+                  name: mysql-secret
+                  key: mysql_dbname
+            - name: MYSQL_USER
+              valueFrom:
+                secretkeyRef:
+                  name: mysql-secret
+                  key: mysql_user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretkeyRef:
+                  name: mysql-secret
+                  key: mysql_user_password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector: 
+    myapp: mysqldb
+  ports:
+    - port: 3306
+    
