@@ -45,7 +45,7 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 80
-  Selector: 
+  selector: 
     myapp: wordpress
     
                   
