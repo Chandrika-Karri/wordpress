@@ -22,17 +22,17 @@ spec:
               valueFrom:
                 secretkeyRef:
                   name: mysql-secret
-                  key: mysql_user
+                  key: DB_USER
             - name: WORDPRESS_DB_PASSWORD
               valueFrom:
                 secretkeyRef:
                   name: mysql-secret
-                  key: mysql_user_password
+                  key: DB_PASSWORD
             - name: WORDPRESS_DB_NAME
               valueFrom:
                 secretkeyRef:
                   name: mysql-secret
-                  key: mysql_dbname
+                  key: DB_NAME
 ---
 apiVersion: v1
 kind: Service
